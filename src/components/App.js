@@ -1,42 +1,65 @@
-import React, { useEffect, useState } from 'react';
-import { database } from '../services/firebase';
-import { ref, onValue } from 'firebase/database';
-import Header from '../components/Header';
-import Widget from '../components/Widget';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { ref, onValue } from "firebase/database";
+import { database } from "../services/firebase";
 
 const App = () => {
+  const { screenStateId } = useParams(); // Get the screenStateId from the URL
   const [screenState, setScreenState] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const screenStateId = window.location.pathname.split('/').pop();
+    if (!screenStateId) return;
+
+    console.log("Fetching data for screenStateId:", screenStateId);
+
     const screenStateRef = ref(database, `screenStates/${screenStateId}`);
-    
-    onValue(screenStateRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data && data.contentData) {
-        setScreenState(JSON.parse(data.contentData));
+    onValue(
+      screenStateRef,
+      (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          console.log("Fetched data:", data);
+
+          try {
+            const parsedData = JSON.parse(data.contentData);
+            setScreenState(parsedData);
+            console.log("Parsed contentData:", parsedData);
+          } catch (error) {
+            console.error("Error parsing contentData:", error);
+          }
+        } else {
+          console.error("No data found for screenStateId:", screenStateId);
+        }
+        setLoading(false);
+      },
+      (error) => {
+        console.error("Firebase error:", error);
+        setLoading(false);
       }
-    });
-  }, []);
+    );
+  }, [screenStateId]);
 
-  if (!screenState) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
 
-  const headerData = screenState.states.find((state) => state.applet === 'header');
-  const widgets = screenState.states.filter((state) => state.applet !== 'header');
+  if (!screenState) return <div>No data available for this screenState.</div>;
 
+  // Render the UI based on the screenState
   return (
-    <div className="app" style={{ width: '2160px', height: '2880px' }}>
-      {headerData && (
-        <Header
-          name={headerData.header.name}
-          forecast={headerData.header.forecast}
-          date={new Date().toLocaleDateString()}
-        />
-      )}
-      <div className="widget-container" style={{ width: '2160px', height: '2432px', display: 'flex', flexWrap: 'wrap' }}>
-        {widgets.map((widget, index) => (
-          <Widget key={index} applet={widget.applet} content={JSON.stringify(widget)} />
-        ))}
+    <div>
+      <h1>Neighborhood Newsfeed</h1>
+      <div>
+        {/* Add a fallback to handle undefined or non-array values */}
+        {Array.isArray(screenState.widgets) ? (
+          screenState.widgets.map((widget, index) => (
+            <div key={index}>
+              <h2>{widget.applet}</h2>
+              <pre>{JSON.stringify(widget, null, 2)}</pre>
+            </div>
+          ))
+        ) : (
+          <p>No widgets available</p>
+        )}
       </div>
     </div>
   );

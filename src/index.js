@@ -1,17 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './components/App';
-import './styles/styles.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import App from "./components/App";
 
-// Find the root element in your HTML
-const rootElement = document.getElementById('root');
-
-// Use the new React 18 API to create the root
-const root = ReactDOM.createRoot(rootElement);
-
-// Render your app using the new API
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <Router>
+    <Routes>
+      <Route path="/screenState/:screenStateId" element={<App />} />
+    </Routes>
+  </Router>
 );
