@@ -1,0 +1,35 @@
+.app {
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .header {
+    background-color: #f4f4f4;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .widget-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .widget {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+  }
+  
+  .widget-header {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px;
+  }
+  
+  .widget-body {
+    padding: 10px;
+  }
+  
