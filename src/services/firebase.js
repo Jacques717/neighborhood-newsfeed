@@ -8,7 +8,7 @@ import { getDatabase } from "firebase/database";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAgCLQG8qOhRRvspZxsqLLtTRxFukOYS0Y",
+  apiKey: "no-way",
   authDomain: "neighborhood-newsfeed.firebaseapp.com",
   databaseURL: "https://neighborhood-newsfeed-default-rtdb.firebaseio.com",
   projectId: "neighborhood-newsfeed",
