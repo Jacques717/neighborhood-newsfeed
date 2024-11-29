@@ -5,6 +5,8 @@ import { database } from "../services/firebase";
 import HeaderWidget from "./HeaderWidget";
 import EventWidget from "./EventWidget";
 import LandownerWidget from "./LandownerWidget";
+import WayfindingWidget from "./WayfindingWidget";
+import FacebookWidget from "./FacebookWidget";
 
 const App = () => {
   const { screenStateId } = useParams(); // Get the screenStateId from the URL
@@ -64,7 +66,34 @@ const App = () => {
               case "event":
                 return <EventWidget key={index} events={widget.events} />;
               case "landowner":
-                return <LandownerWidget key={index} {...widget} />;
+                return <LandownerWidget
+      key={index}
+      header={widget.header}
+      post={widget.post}
+      qrUrl={widget.qrUrl}
+    />
+                case "wayfinder":
+                  return (
+                    <WayfindingWidget
+                      key={index}
+                      header={widget.header}
+                      icon={widget.icon}
+                      locations={widget.locations}
+                      qrUrl={widget.qrUrl}
+                      qrPrompt={widget.qrPrompt}
+                    />
+                  );
+                
+                case "facebook":
+                  return (
+                    <FacebookWidget
+                      key={index}
+                      header={widget.header}
+                      icon={widget.icon}
+                      post={widget.post}
+                      qrUrl={widget.qrUrl}
+                    />
+                  );
               default:
                 return <div key={index}>Unknown Widget</div>;
             }
