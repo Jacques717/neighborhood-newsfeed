@@ -1,43 +1,45 @@
-import React from 'react';
+import React from "react";
 
-const LandownerWidget = ({ header, post, qrUrl }) => {
+const LandownerWidget = ({ header, post, qrUrl, qrPrompt }) => {
   // Construct the full Cloudinary URL
   const cloudinaryBaseURL = "https://res.cloudinary.com/dlalovyeu/image/upload/";
   const cloudinaryTransforms = "dpr_auto,w_1011,h_1011,c_pad,e_grayscale,b_auto:predominant/";
   const imageUrl = `${cloudinaryBaseURL}${cloudinaryTransforms}${post.creative.cloudinaryId}.png`;
 
   return (
-    <div className="w-full h-[1168px] bg-white rounded-lg shadow-lg p-4">
-      {/* Widget Header */}
-      <div className="w-full h-[157px] bg-gray-200 flex items-center p-4 rounded-t-lg">
-        <div className="flex items-center space-x-4">
-          {/* Icon */}
-          <div className="w-12 h-12 bg-yellow-500 text-white flex items-center justify-center rounded-full">
-            <i className="mdi mdi-bullhorn-outline text-2xl"></i>
-          </div>
-          {/* Title */}
-          <h2 className="text-2xl font-bold text-gray-800">{header}</h2>
+    <div className="w-[1011px] h-[1168px] bg-white rounded-lg shadow-md flex flex-col">
+      {/* Mini Header */}
+      <div className="w-full h-[157px] flex items-center justify-between px-4 bg-blue-500 text-white rounded-t-lg">
+        <div className="flex items-center">
+          <i className="mdi mdi-bullhorn-outline text-4xl mr-4"></i>
+          <h2 className="text-xl font-bold">{header}</h2>
+        </div>
+        <div className="flex flex-col items-center">
+          <a
+            href={qrUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-[40px] h-[40px] bg-white rounded-full p-2"
+          >
+            <img
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(
+                qrUrl
+              )}`}
+              alt="QR Code"
+              className="w-full h-full"
+            />
+          </a>
+          <span className="text-xs mt-2">{qrPrompt}</span>
         </div>
       </div>
 
-      {/* Widget Body */}
-      <div className="w-full h-[1011px] flex flex-col items-center justify-center">
-        {/* Ad Image */}
+      {/* Body */}
+      <div className="w-full h-full flex-1 p-4 flex justify-center items-center">
         <img
           src={imageUrl}
           alt="Ad"
-          className="w-[1011px] h-[1011px] object-cover rounded-lg shadow-md mb-4"
+          className="max-w-full max-h-full rounded-lg shadow-md"
         />
-
-        {/* QR Code Link */}
-        <a
-          href={qrUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 underline hover:text-blue-800 text-sm mt-4"
-        >
-          View All Posts
-        </a>
       </div>
     </div>
   );

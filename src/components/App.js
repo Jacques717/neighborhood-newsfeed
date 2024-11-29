@@ -7,6 +7,7 @@ import EventWidget from "./EventWidget";
 import LandownerWidget from "./LandownerWidget";
 import WayfindingWidget from "./WayfindingWidget";
 import FacebookWidget from "./FacebookWidget";
+// import "../styles/styles.css"
 
 const App = () => {
   const { screenStateId } = useParams(); // Get the screenStateId from the URL
