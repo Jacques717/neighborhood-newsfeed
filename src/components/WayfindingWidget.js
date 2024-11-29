@@ -29,7 +29,7 @@ const WayfindingWidget = ({ header, icon, locations, qrUrl, qrPrompt }) => {
       </div>
 
       {/* Body */}
-      <div className="w-full h-full flex-1 overflow-y-scroll p-4">
+      <div className="w-full h-full flex-1 overflow-hidden p-4">
         {locations.map((location, index) => (
           <div key={index} className="mb-4">
             <h3 className="text-lg font-bold text-gray-800">{location.name}</h3>

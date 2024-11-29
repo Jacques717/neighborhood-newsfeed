@@ -13,7 +13,7 @@ const EventWidget = ({ events }) => {
           <h2 className="text-xl font-bold">Local Events</h2>
         </div>
         <div className="flex flex-col items-center">
-          <a
+        <a
             href={qrUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -31,30 +31,38 @@ const EventWidget = ({ events }) => {
         </div>
       </div>
 
-      {/* Body */}
-      <div className="w-full h-full flex-1 p-4 overflow-y-scroll">
-        {events.map((event, index) => (
-          <div
-            key={index}
-            className="mb-4 p-4 border border-gray-200 rounded-lg bg-gray-50"
-          >
-            <h3 className="text-lg font-semibold text-gray-700 mb-2">{event.name}</h3>
-            <p className="text-sm text-gray-600 mb-1">
-              <span className="font-medium text-gray-700">Date:</span> {event.date}
-            </p>
-            <p className="text-sm text-gray-600 mb-3">
-              <span className="font-medium text-gray-700">Location:</span> {event.location}
-            </p>
-            <a
-              href={event.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 underline hover:text-blue-800 text-sm"
+      {/* Body with Fade Effect */}
+      <div className="relative flex-1 p-4 overflow-hidden">
+        <div className="max-h-full pb-10">
+          {events.map((event, index) => (
+            <div
+              key={index}
+              className="mb-6 last:mb-0 p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200"
             >
-              More Info
-            </a>
-          </div>
-        ))}
+              {/* Event Name */}
+              <h3 className="text-lg font-semibold text-gray-700">{event.name}</h3>
+              {/* Event Date */}
+              <p className="text-sm text-gray-600">
+                <span className="font-medium">Date:</span> {event.date}
+              </p>
+              {/* Event Location */}
+              <p className="text-sm text-gray-600">
+                <span className="font-medium">Location:</span> {event.location}
+              </p>
+              {/* Event Link */}
+              <a
+                href={event.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline hover:text-blue-800 text-sm"
+              >
+                More Info
+              </a>
+            </div>
+          ))}
+        </div>
+        {/* Fade Effect */}
+        <div className="absolute bottom-0 left-0 w-full h-10 bg-gradient-to-b from-transparent to-white pointer-events-none"></div>
       </div>
     </div>
   );
