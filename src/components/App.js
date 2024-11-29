@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ref, onValue } from "firebase/database";
 import { database } from "../services/firebase";
-import HeaderWidget from './HeaderWidget';
-import EventWidget from './EventWidget';
-import LandownerWidget from './LandownerWidget';
+import HeaderWidget from "./HeaderWidget";
+import EventWidget from "./EventWidget";
+import LandownerWidget from "./LandownerWidget";
 
 const App = () => {
   const { screenStateId } = useParams(); // Get the screenStateId from the URL
@@ -47,19 +47,23 @@ const App = () => {
 
   if (!screenState) return <div>No data available for this screenState.</div>;
 
+  // Separate the header widget from the rest
+  const headerWidget = screenState.widgets.find((widget) => widget.applet === "header");
+  const otherWidgets = screenState.widgets.filter((widget) => widget.applet !== "header");
+
   // Render the UI based on the screenState
   return (
-    <div>
-      <h1>Neighborhood Newsfeed</h1>
-      <div className="widgets">
-        {Array.isArray(screenState.widgets) ? (
-          screenState.widgets.map((widget, index) => {
+    <div className="w-[2160px] h-[2880px]">
+      {headerWidget && (
+        <HeaderWidget key="header" header={headerWidget.header} />
+      )}
+      <div className="w-full h-[2432px] grid grid-cols-2 gap-4 p-4">
+        {Array.isArray(otherWidgets) && otherWidgets.length > 0 ? (
+          otherWidgets.map((widget, index) => {
             switch (widget.applet) {
-              case 'header':
-                return <HeaderWidget key={index} header={widget.header} />;
-              case 'event':
+              case "event":
                 return <EventWidget key={index} events={widget.events} />;
-              case 'landowner':
+              case "landowner":
                 return <LandownerWidget key={index} {...widget} />;
               default:
                 return <div key={index}>Unknown Widget</div>;
@@ -71,7 +75,6 @@ const App = () => {
       </div>
     </div>
   );
-  
 };
 
 export default App;

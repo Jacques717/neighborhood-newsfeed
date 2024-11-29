@@ -3,8 +3,9 @@ import React from 'react';
 
 const HeaderWidget = ({ header }) => {
   return (
-    <div className="header-widget">
+    <div class="w-full h-[448px] bg-gray-200">
       <h1>{header.name}</h1>
+      <div>Neighborhood Newsfeed</div>
       <p>{header.monthStr} {header.dayStr}</p>
       <div className="forecast">
         <i className={`weather-icon ${header.forecast.icon}`}></i>
