@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ref, onValue } from "firebase/database";
 import { database } from "../services/firebase";
+import HeaderWidget from './HeaderWidget';
+import EventWidget from './EventWidget';
+import LandownerWidget from './LandownerWidget';
 
 const App = () => {
   const { screenStateId } = useParams(); // Get the screenStateId from the URL
@@ -48,21 +51,27 @@ const App = () => {
   return (
     <div>
       <h1>Neighborhood Newsfeed</h1>
-      <div>
-        {/* Add a fallback to handle undefined or non-array values */}
+      <div className="widgets">
         {Array.isArray(screenState.widgets) ? (
-          screenState.widgets.map((widget, index) => (
-            <div key={index}>
-              <h2>{widget.applet}</h2>
-              <pre>{JSON.stringify(widget, null, 2)}</pre>
-            </div>
-          ))
+          screenState.widgets.map((widget, index) => {
+            switch (widget.applet) {
+              case 'header':
+                return <HeaderWidget key={index} header={widget.header} />;
+              case 'event':
+                return <EventWidget key={index} events={widget.events} />;
+              case 'landowner':
+                return <LandownerWidget key={index} {...widget} />;
+              default:
+                return <div key={index}>Unknown Widget</div>;
+            }
+          })
         ) : (
           <p>No widgets available</p>
         )}
       </div>
     </div>
   );
+  
 };
 
 export default App;
