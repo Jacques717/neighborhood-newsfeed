@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/LandownerWidget.css'; // Optional CSS file for styling
+//import '../styles/LandownerWidget.css'; // Optional CSS file for styling
 
 const LandownerWidget = ({ header, post, qrUrl }) => {
   return (

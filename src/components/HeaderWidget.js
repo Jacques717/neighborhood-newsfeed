@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/HeaderWidget.css'; // Optional CSS file for styling
+//import '../styles/HeaderWidget.css'; // Optional CSS file for styling
 
 const HeaderWidget = ({ header }) => {
   return (

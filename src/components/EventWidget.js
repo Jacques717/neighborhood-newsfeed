@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/EventWidget.css'; // Optional CSS file for styling
+//import '../styles/EventWidget.css'; // Optional CSS file for styling
 
 const EventWidget = ({ events }) => {
   return (
